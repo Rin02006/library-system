@@ -1,18 +1,14 @@
-FROM richarvey/nginx-php-fpm:8.3
+FROM trafex/php-nginx:8.3
 
-COPY . .
+COPY . /var/www/html
 
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV REAL_IP_HEADER 1
+# Set the web root to Laravel's public folder
+ENV DOCUMENT_ROOT /var/www/html/public
 
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
-
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-# 🔥 THIS LINE RUNS COMPOSER DURING THE BUILD
+# Install composer dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-CMD ["/start.sh"]
+# Laravel needs write access to these folders
+RUN chown -R nobody:nobody /var/www/html/storage /var/www/html/bootstrap/cache
+
+CMD ["/usr/bin/supervisord"]
