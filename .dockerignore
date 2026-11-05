@@ -1,0 +1,8 @@
+vendor
+node_modules
+.env
+.env.backup
+.env.production
+.git
+.gitignore
+storage/logs/*
