@@ -1,6 +1,6 @@
 FROM trafex/php-nginx:latest
 
-# 🔥 Install the missing iconv extension using Alpine's package manager
+# Install the missing iconv extension
 USER root
 RUN apk add --no-cache php85-iconv
 
@@ -17,4 +17,5 @@ RUN chown -R nobody:nobody /var/www/html/storage /var/www/html/bootstrap/cache
 
 USER nobody
 
-CMD ["/usr/bin/supervisord"]
+# 🔥 This is the correct command to start nginx and php-fpm
+CMD ["/entrypoint.sh"]
