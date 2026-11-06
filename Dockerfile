@@ -1,9 +1,8 @@
 FROM trafex/php-nginx:latest
 
-# 🔥 Install the missing iconv extension
+# 🔥 Install the missing iconv extension using Alpine's package manager
 USER root
-RUN apk add --no-cache icu-dev
-RUN docker-php-ext-install iconv
+RUN apk add --no-cache php85-iconv
 
 # Copy Composer from the official image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
