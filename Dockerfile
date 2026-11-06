@@ -12,10 +12,10 @@ COPY . /var/www/html
 ENV DOCUMENT_ROOT /var/www/html/public
 ENV COMPOSER_MEMORY_LIMIT=-1
 
-# 🔥 Use --no-scripts to prevent memory spikes during installation
+# 🔥 Install dependencies with memory optimization
 RUN composer install --no-dev --no-scripts --optimize-autoloader --prefer-dist
 
-# Generate the autoloader and run Laravel scripts AFTER composer finishes
+# 🔥 Generate autoload and run scripts separately to save memory
 RUN composer dump-autoload --optimize
 RUN php artisan package:discover --ansi
 
